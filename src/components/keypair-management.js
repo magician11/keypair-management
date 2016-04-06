@@ -1,5 +1,6 @@
 import React from 'react';
 import NavBar from './nav';
+import Footer from './footer';
 
 export default (props) => {
   return (
@@ -8,6 +9,7 @@ export default (props) => {
       <div className="container">
         { props.children }
       </div>
+      <Footer />
     </div>
   );
 };

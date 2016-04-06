@@ -1,12 +1,13 @@
 import React from 'react';
 import { Jumbotron, Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 export default () => {
   return (
-    <Jumbotron>
-      <h1>Hello, world!</h1>
-      <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-      <p><Button bsStyle="primary">Learn more</Button></p>
+    <Jumbotron className="text-center">
+      <h1>Keypair Management</h1>
+      <p>An app to generate and manage a keypair used for encryption and signing.</p>
+      <p><LinkContainer to={{ pathname: '/generate' }}><Button bsStyle="primary" bsSize="large">Generate your keypair</Button></LinkContainer></p>
     </Jumbotron>
   );
 };
