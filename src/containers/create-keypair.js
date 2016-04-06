@@ -15,17 +15,23 @@ class CreateKeypair extends Component {
   render() {
     console.log(this.state);
     return (
-      <div className="jumbotron text-center create-keypair col-md-8 col-md-offset-2">
-        <h1>Generate A Keypair</h1>
-        <p>This app will create you a keypair, encrypt the secret key with the password you enter, and provide it to you as a downloadable zip.</p>
-        <p>Simply enter a password and hit the button below.</p>
-        <input className="form-control input-lg" type="password" placeholder="Your password to encrypt your secret key" />
-        <button
-          className="btn btn-primary btn-lg"
-          onClick={this.generateKeyPair.bind(this)}
-        >
-          Generate my keypair
-        </button>
+      <div className="jumbotron text-center create-keypair row">
+        <div className="col-md-8 col-md-offset-2">
+          <h1>Generate A Keypair</h1>
+          <p>This app will create you a keypair, encrypt the secret key with the password you enter, and provide it to you as a downloadable zip.</p>
+          <p>Simply enter a password and hit the button below.</p>
+          <div className="row">
+            <div className="col-md-8 col-md-offset-2">
+              <input className="form-control input-lg" type="password" placeholder="Your password to encrypt your secret key" />
+            </div>
+          </div>
+            <button
+            className="btn btn-primary btn-lg"
+            onClick={this.generateKeyPair.bind(this)}
+          >
+            Generate my keypair
+          </button>
+        </div>
       </div>
     );
   }

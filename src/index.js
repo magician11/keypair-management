@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CreateKeypair from './containers/create-keypair';
+import { Router, browserHistory } from 'react-router';
+import routes from './routes';
 
-ReactDOM.render(<CreateKeypair />, document.querySelector('.container'));
+ReactDOM.render(<Router history={ browserHistory } routes={ routes } />, document.getElementById('keypair-management'));
