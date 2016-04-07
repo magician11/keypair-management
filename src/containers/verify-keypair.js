@@ -1,6 +1,8 @@
 import React from 'react';
 import { Panel } from 'react-bootstrap';
 
+// use http://okonet.ru/react-dropzone/
+
 const title = (
   <h3>Coming soon...</h3>
 );
