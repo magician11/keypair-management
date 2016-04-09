@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { createKeypair } from '../actions/index';
+import tweetnaclUtil from 'tweetnacl-util';
+import jsZip from 'jszip';
+import { saveAs } from 'filesaverjs';
 
 class CreateKeypair extends Component {
   onSubmit(props) {
@@ -11,6 +14,13 @@ class CreateKeypair extends Component {
     return `form-group ${(field.touched && field.invalid) ? 'has-error' : ''}`;
   }
 
+  createZip() {
+    const zip = new jsZip();
+    zip.file('keypair.json', JSON.stringify(this.props.keypair));
+    const content = zip.generate({ type: 'blob' });
+    saveAs(content, "keypair.zip");
+  }
+
   render() {
     const { fields: { password, passwordConfirmation }, handleSubmit } = this.props;
 
@@ -18,8 +28,8 @@ class CreateKeypair extends Component {
     if (this.props.keypair.publicKey && this.props.keypair.secretKey) {
       content = (
         <div>
-          <p>You may now download your encryption pair.</p>
-          <button className="btn btn-success btn-lg">Download keypair</button>
+          <p>You may now download your encryption keypair.</p>
+          <button className="btn btn-success btn-lg" onClick={this.createZip.bind(this)}>Download keypair</button>
         </div>
       );
     } else {
