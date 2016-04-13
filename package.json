@@ -10,7 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "filesaverjs": "^0.2.1",
-    "jszip": "^2.6.0",
     "react": "^0.14.8",
     "react-bootstrap": "^0.28.5",
     "react-dom": "^0.14.8",

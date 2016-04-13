@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { createKeypair } from '../actions/index';
-import tweetnaclUtil from 'tweetnacl-util';
-import jsZip from 'jszip';
 import { saveAs } from 'filesaverjs';
 
 class CreateKeypair extends Component {
@@ -15,10 +13,8 @@ class CreateKeypair extends Component {
   }
 
   createZip() {
-    const zip = new jsZip();
-    zip.file('keypair.json', JSON.stringify(this.props.keypair));
-    const content = zip.generate({ type: 'blob' });
-    saveAs(content, "keypair.zip");
+    const blob = new Blob([JSON.stringify(this.props.keypair)], {type : 'application/json'});
+    saveAs(blob, 'keypair.json');
   }
 
   render() {
