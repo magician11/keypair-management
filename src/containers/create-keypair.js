@@ -6,6 +6,7 @@ import { saveAs } from 'filesaverjs';
 class CreateKeypair extends Component {
 
   onSubmit(props) {
+    console.log('generate keypair.... on submitting the password form...');
     this.props.createKeypair(props.password);
   }
 
@@ -14,50 +15,54 @@ class CreateKeypair extends Component {
   }
 
   saveKeypairToDisk() {
-    const blob = new Blob([JSON.stringify(this.props.encryptionKeys)], {type : 'application/json'});
+    const blob = new Blob([JSON.stringify(this.props.encryptionKeys.keypair)], {type : 'application/json'});
     saveAs(blob, 'keypair.json');
   }
 
   render() {
-    console.log('rendering CreateKeypair form...');
-    console.log('encryptionKeys props', this.props.encryptionKeys);
+    // console.log('rendering CreateKeypair form...');
+    // console.log('encryptionKeys props', this.props.encryptionKeys);
     const { fields: { password, passwordConfirmation }, handleSubmit } = this.props;
 
-    if(this.props.encryptionKeys.generatingKeys) {
-      console.log('show a spinner!');
-    }
-
     let content;
-    if (this.props.encryptionKeys.publicKey && this.props.encryptionKeys.secretKey) {
+    if (this.props.encryptionKeys.generatingKeys) {
       content = (
         <div>
-        <p>You may now download your encryption keypair.</p>
-        <button className="btn btn-success btn-lg" onClick={this.saveKeypairToDisk.bind(this)}>Download keypair</button>
+          <i className="fa fa-cog fa-spin fa-5x"></i>
+          <h3>generating your keypair</h3>
+          <span className="sr-only">Loading...</span>
+        </div>
+      );
+    } else if (this.props.encryptionKeys.keypair) {
+      content = (
+        <div>
+          <p>You may now download your encryption keypair.</p>
+          <button className="btn btn-success btn-lg" onClick={this.saveKeypairToDisk.bind(this)}><i className="fa fa-download"></i> Download keypair</button>
         </div>
       );
     } else {
       content = (
         <div>
-        <p>This section will create you a keypair, encrypt the secret key with the password you enter, and provide it to you as a downloadable zip.</p>
-        <p>Simply enter a password, confirm it, and hit the button below.</p>
-        <hr />
-        <div className="row">
-        <div className="col-md-8 col-md-offset-2">
-        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-        <div className={this.checkValidation(password)}>
-        <label htmlFor="title">Password</label>
-        <input type="text" className="form-control" id="password" {...password} />
-        <div className="help-block">{ (password.touched && password.error) ? password.error : '' }</div>
-        </div>
-        <div className={this.checkValidation(passwordConfirmation)}>
-        <label htmlFor="title">Password confirmation</label>
-        <input type="text" className="form-control" id="passwordConfirmation" {...passwordConfirmation} />
-        <div className="help-block">{ (passwordConfirmation.touched && passwordConfirmation.error) ? passwordConfirmation.error : '' }</div>
-        </div>
-        <button className="btn btn-primary btn-lg">Generate my keypair</button>
-        </form>
-        </div>
-        </div>
+          <p>This section will create you a keypair, encrypt the secret key with the password you enter, and provide it to you as a downloadable zip.</p>
+          <p>Simply enter a password, confirm it, and hit the button below.</p>
+          <hr />
+          <div className="row">
+            <div className="col-md-8 col-md-offset-2">
+              <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+                <div className={this.checkValidation(password)}>
+                  <label htmlFor="title">Password</label>
+                  <input type="text" className="form-control" id="password" {...password} />
+                  <div className="help-block">{ (password.touched && password.error) ? password.error : '' }</div>
+                </div>
+                <div className={this.checkValidation(passwordConfirmation)}>
+                  <label htmlFor="title">Password confirmation</label>
+                  <input type="text" className="form-control" id="passwordConfirmation" {...passwordConfirmation} />
+                  <div className="help-block">{ (passwordConfirmation.touched && passwordConfirmation.error) ? passwordConfirmation.error : '' }</div>
+                </div>
+                <button className="btn btn-primary btn-lg">Generate my keypair</button>
+              </form>
+            </div>
+          </div>
         </div>
       );
     }

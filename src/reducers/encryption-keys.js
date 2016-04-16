@@ -6,12 +6,12 @@ const INITIAL_STATE = {
 };
 
 export default function (state = INITIAL_STATE, action) {
-  console.log('action', action);
-  // console.log('state', state);
   switch (action.type) {
     case CREATE_KEYPAIR:
+    console.log('action', action);
     return { ...state, generatingKeys: true };
     case CREATED_KEYPAIR:
+    console.log('action', action);
     return { ...state, keypair: action.payload, generatingKeys: false };
     default:
     return state;
