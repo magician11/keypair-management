@@ -3,6 +3,7 @@ import secretkeyEncryption from 'secretkey-encryption';
 
 export const CREATE_KEYPAIR = 'CREATE_KEYPAIR';
 export const CREATED_KEYPAIR = 'CREATED_KEYPAIR';
+export const VERIFIED_KEYPAIR = 'VERIFIED_KEYPAIR';
 
 export function createKeypair(password) {
   return (dispatch, getState) => {
@@ -19,5 +20,11 @@ export function createKeypair(password) {
         });
       }, 5000);
     });
+  };
+}
+
+export function verifyKeypair(password) {
+  return {
+    type: VERIFIED_KEYPAIR
   };
 }

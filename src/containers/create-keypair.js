@@ -15,7 +15,7 @@ class CreateKeypair extends Component {
   }
 
   saveKeypairToDisk() {
-    const blob = new Blob([JSON.stringify(this.props.encryptionKeys.keypair)], {type : 'application/json'});
+    const blob = new Blob([JSON.stringify(this.props.encryptionKeys.keypair)], { type: 'application/json' });
     saveAs(blob, 'keypair.json');
   }
 
@@ -51,12 +51,12 @@ class CreateKeypair extends Component {
               <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                 <div className={this.checkValidation(password)}>
                   <label htmlFor="title">Password</label>
-                  <input type="text" className="form-control" id="password" {...password} />
+                  <input type="password" className="form-control" id="password" {...password} />
                   <div className="help-block">{ (password.touched && password.error) ? password.error : '' }</div>
                 </div>
                 <div className={this.checkValidation(passwordConfirmation)}>
                   <label htmlFor="title">Password confirmation</label>
-                  <input type="text" className="form-control" id="passwordConfirmation" {...passwordConfirmation} />
+                  <input type="password" className="form-control" id="passwordConfirmation" {...passwordConfirmation} />
                   <div className="help-block">{ (passwordConfirmation.touched && passwordConfirmation.error) ? passwordConfirmation.error : '' }</div>
                 </div>
                 <button className="btn btn-primary btn-lg">Generate my keypair</button>
@@ -96,7 +96,7 @@ function validate(values) {
 }
 
 function mapStateToProps(state) {
-  return { encryptionKeys: state.keys };
+  return { encryptionKeys: state.keys.create };
 }
 
 export default reduxForm({
