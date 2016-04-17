@@ -8,16 +8,16 @@ export function createKeypair(password) {
   return (dispatch, getState) => {
     dispatch({ type: CREATE_KEYPAIR });
     const keypair = tweetnacl.sign.keyPair();
-    secretkeyEncryption.encryptSecretKey(password, keypair.secretKey, undefined, undefined, undefined, undefined, (secretKeyBundle) => {
+    secretkeyEncryption.encryptSecretKey(password, keypair.secretKey)
+    .then((secretKeyBundle) => {
       const obj = { publicKey: keypair.publicKey, secretKeyBundle };
-      //setTimeout(() => {
+      setTimeout(() => {
         console.log(`derived new key from password ${password}`);
         dispatch({
           type: CREATED_KEYPAIR,
           payload: obj
         });
-      //}, 3000);
-
+      }, 5000);
     });
   };
 }

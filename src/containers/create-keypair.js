@@ -20,7 +20,7 @@ class CreateKeypair extends Component {
   }
 
   render() {
-    // console.log('rendering CreateKeypair form...');
+    console.log('rendering CreateKeypair form...');
     // console.log('encryptionKeys props', this.props.encryptionKeys);
     const { fields: { password, passwordConfirmation }, handleSubmit } = this.props;
 
