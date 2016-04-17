@@ -21,7 +21,7 @@ export default function (state = INITIAL_STATE, action) {
     return { ...state, create: { keypair: action.payload, generatingKeys: false } };
     case VERIFIED_KEYPAIR:
     console.log('action', action);
-    return { ...state, verify: { verified: true } };
+    return { ...state, verify: action.payload };
     default:
     return state;
   }

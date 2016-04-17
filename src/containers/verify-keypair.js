@@ -7,7 +7,7 @@ class VerifyKeypair extends Component {
 
   onSubmit(props) {
     console.log('verifying keypair.... on submitting the password form...');
-    this.props.verifyKeypair(props.password, props.encryptSecretKeyBundle);
+    this.props.verifyKeypair(props.password, {todo: true});
   }
 
   checkValidation(field) {
@@ -19,38 +19,46 @@ class VerifyKeypair extends Component {
     const { fields: { password }, handleSubmit } = this.props;
 
     let content;
-if (this.props.encryptionKeys.verified) {
-      content = (
-        <Alert bsStyle="success">
-          <i className="fa fa-check" aria-hidden="true"></i>Great! Your keypair has been verified.
-        </Alert>
-      );
+    if (this.props.encryptionKeys.keypair) {
+      if(this.props.encryptionKeys.verified) {
+        content = (
+          <Alert bsStyle="success">
+            <i className="fa fa-check" aria-hidden="true"></i> Great! Your keypair has been verified.
+          </Alert>
+        );
+      } else {
+        content = (
+          <Alert bsStyle="danger">
+            <i className="fa fa-times" aria-hidden="true"></i> Verification of your keypair failed.
+          </Alert>
+        );
+      }
     } else {
       content = (
         <div>
-          <p>Here you can verify your password works with your keypair.</p>
-          <hr />
-          <div className="row">
-            <div className="col-md-8 col-md-offset-2">
-              <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                <div className={this.checkValidation(password)}>
-                  <label htmlFor="title">Password</label>
-                  <input type="text" className="form-control" id="password" {...password} />
-                  <div className="help-block">{ (password.touched && password.error) ? password.error : '' }</div>
-                </div>
-                <button className="btn btn-primary btn-lg">Verify keypair</button>
-              </form>
-            </div>
-          </div>
+        <p>Here you can verify your password works with your keypair.</p>
+        <hr />
+        <div className="row">
+        <div className="col-md-8 col-md-offset-2">
+        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+        <div className={this.checkValidation(password)}>
+        <label htmlFor="title">Password</label>
+        <input type="password" className="form-control" id="password" {...password} />
+        <div className="help-block">{ (password.touched && password.error) ? password.error : '' }</div>
+        </div>
+        <button className="btn btn-primary btn-lg">Verify keypair</button>
+        </form>
+        </div>
+        </div>
         </div>
       );
     }
 
     return (
       <div className="jumbotron text-center create-keypair row">
-        <div className="col-md-10 col-md-offset-1">
-          <h1>Verify Your Keypair</h1>
-          {content}
+      <div className="col-md-10 col-md-offset-1">
+      <h1>Verify Your Keypair</h1>
+      {content}
       </div>
       </div>
     );

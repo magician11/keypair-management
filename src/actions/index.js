@@ -23,8 +23,28 @@ export function createKeypair(password) {
   };
 }
 
-export function verifyKeypair(password) {
-  return {
-    type: VERIFIED_KEYPAIR
+export function verifyKeypair(password, encryptedSecretKeyBundle) {
+  return (dispatch, getState) => {
+    secretkeyEncryption.decryptEncryptedSecretKey(password, encryptedSecretKeyBundle)
+    .then((secretKey) => {
+      console.log('Success! Secret successfully decrypted!');
+      dispatch({
+        type: VERIFIED_KEYPAIR,
+        payload: {
+          keypair: encryptedSecretKeyBundle,
+          verified: true
+        }
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      dispatch({
+        type: VERIFIED_KEYPAIR,
+        payload: {
+          keypair: encryptedSecretKeyBundle,
+          verified: false
+        }
+      });
+    });
   };
 }
