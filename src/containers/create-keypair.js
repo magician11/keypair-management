@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { createKeypair } from '../actions/index';
 import { saveAs } from 'filesaverjs';
+import tweetnaclUtil from 'tweetnacl-util';
 
 class CreateKeypair extends Component {
 
@@ -15,7 +16,23 @@ class CreateKeypair extends Component {
   }
 
   saveKeypairToDisk() {
-    const blob = new Blob([JSON.stringify(this.props.encryptionKeys.keypair)], { type: 'application/json' });
+    console.log('Going to stringify keypair...');
+    console.log(this.props.encryptionKeys.keypair);
+    const unencodedKeypair = this.props.encryptionKeys.keypair;
+    const base64EncodedKeyPair = {
+      publicKey: tweetnaclUtil.encodeBase64(unencodedKeypair.publicKey),
+      secretKeyBundle: {
+        blockSize: unencodedKeypair.secretKeyBundle.blockSize,
+        dkLen: unencodedKeypair.secretKeyBundle.dkLen,
+        interruptStep: unencodedKeypair.secretKeyBundle.interruptStep,
+        logN: unencodedKeypair.secretKeyBundle.logN,
+        encryptedSecretKey: tweetnaclUtil.encodeBase64(unencodedKeypair.secretKeyBundle.encryptedSecretKey),
+        nonce: tweetnaclUtil.encodeBase64(unencodedKeypair.secretKeyBundle.nonce),
+        salt: tweetnaclUtil.encodeBase64(unencodedKeypair.secretKeyBundle.salt)
+      }
+    };
+    console.log(JSON.stringify(base64EncodedKeyPair));
+    const blob = new Blob([JSON.stringify(base64EncodedKeyPair)], { type: 'application/json' });
     saveAs(blob, 'keypair.json');
   }
 

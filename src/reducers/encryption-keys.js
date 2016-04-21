@@ -1,4 +1,4 @@
-import { CREATE_KEYPAIR, CREATED_KEYPAIR, VERIFIED_KEYPAIR } from '../actions/index';
+import { CREATE_KEYPAIR, CREATED_KEYPAIR, VERIFIED_KEYPAIR, RESET_VERIFICATION } from '../actions/index';
 
 const INITIAL_STATE = {
   create: {
@@ -22,6 +22,9 @@ export default function (state = INITIAL_STATE, action) {
     case VERIFIED_KEYPAIR:
     console.log('action', action);
     return { ...state, verify: action.payload };
+    case RESET_VERIFICATION:
+    console.log('action', action);
+    return { ...state, verify: {keypair: null, verified: false } };
     default:
     return state;
   }

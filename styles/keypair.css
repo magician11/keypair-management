@@ -1,3 +1,3 @@
-.create-keypair label, .create-keypair button {
+.create-keypair label, .create-keypair button, .verify-keypair .alert {
   margin-top: 2.9rem;
 }
