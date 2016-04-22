@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
-import { createKeypair } from '../actions/index';
+import { createKeypair, resetCreateState } from '../actions/index';
 import { saveAs } from 'filesaverjs';
 import tweetnaclUtil from 'tweetnacl-util';
 
 class CreateKeypair extends Component {
 
   onSubmit(props) {
-    console.log('generate keypair.... on submitting the password form...');
     this.props.createKeypair(props.password);
+  }
+
+  resetCreatePage() {
+    this.props.resetForm();
+    this.props.resetCreateState();
   }
 
   checkValidation(field) {
@@ -16,8 +20,6 @@ class CreateKeypair extends Component {
   }
 
   saveKeypairToDisk() {
-    console.log('Going to stringify keypair...');
-    console.log(this.props.encryptionKeys.keypair);
     const unencodedKeypair = this.props.encryptionKeys.keypair;
     const base64EncodedKeyPair = {
       publicKey: tweetnaclUtil.encodeBase64(unencodedKeypair.publicKey),
@@ -31,14 +33,11 @@ class CreateKeypair extends Component {
         salt: tweetnaclUtil.encodeBase64(unencodedKeypair.secretKeyBundle.salt)
       }
     };
-    console.log(JSON.stringify(base64EncodedKeyPair));
     const blob = new Blob([JSON.stringify(base64EncodedKeyPair)], { type: 'application/json' });
     saveAs(blob, 'keypair.json');
   }
 
   render() {
-    console.log('rendering CreateKeypair form...');
-    // console.log('encryptionKeys props', this.props.encryptionKeys);
     const { fields: { password, passwordConfirmation }, handleSubmit } = this.props;
 
     let content;
@@ -55,6 +54,7 @@ class CreateKeypair extends Component {
         <div>
           <p>You may now download your encryption keypair.</p>
           <button className="btn btn-success btn-lg" onClick={this.saveKeypairToDisk.bind(this)}><i className="fa fa-download"></i> Download keypair</button>
+          <button className="btn btn-info center-block" onClick={this.resetCreatePage.bind(this)}><i className="fa fa-undo" aria-hidden="true"></i> Generate a new keypair</button>
         </div>
       );
     } else {
@@ -119,4 +119,4 @@ function mapStateToProps(state) {
 export default reduxForm({
   form: 'CreateKeypair',
   fields: ['password', 'passwordConfirmation'],
-  validate }, mapStateToProps, { createKeypair })(CreateKeypair);
+  validate }, mapStateToProps, { createKeypair, resetCreateState })(CreateKeypair);

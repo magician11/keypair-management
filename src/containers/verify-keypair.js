@@ -7,9 +7,6 @@ import SuccessMessage from '../components/success-message';
 class VerifyKeypair extends Component {
 
   onSubmit(props) {
-    console.log('verifying keypair.... on submitting the password form...');
-    console.log(props);
-
     const reader = new FileReader();
     const uploadedFile = props.keypairBundle[0];
 
@@ -42,8 +39,6 @@ class VerifyKeypair extends Component {
   }
 
   render() {
-    console.log('rendering VerifyKeypair form...');
-    console.log(this.props);
     const { fields: { keypairBundle, password }, handleSubmit } = this.props;
 
     let content;
@@ -92,8 +87,6 @@ class VerifyKeypair extends Component {
 
 function validate(values) {
   const errors = {};
-
-  console.log(values);
 
   if (!values.keypairBundle) {
     errors.keypairBundle = 'Upload your keypair file.';
