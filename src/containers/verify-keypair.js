@@ -11,17 +11,15 @@ class VerifyKeypair extends Component {
     const uploadedFile = props.keypairBundle[0];
 
     reader.onload = function (inputFile) {
-      const encodedBase64data = JSON.parse(inputFile.target.result);
+      const cryptoData = JSON.parse(inputFile.target.result).crypto;
       const decodedKeyPair = {
-        publicKey: tweetnaclUtil.decodeBase64(encodedBase64data.publicKey),
+        publicKey: tweetnaclUtil.decodeBase64(cryptoData.publicKey),
         secretKeyBundle: {
-          blockSize: encodedBase64data.secretKeyBundle.blockSize,
-          dkLen: encodedBase64data.secretKeyBundle.dkLen,
-          interruptStep: encodedBase64data.secretKeyBundle.interruptStep,
-          logN: encodedBase64data.secretKeyBundle.logN,
-          encryptedSecretKey: tweetnaclUtil.decodeBase64(encodedBase64data.secretKeyBundle.encryptedSecretKey),
-          nonce: tweetnaclUtil.decodeBase64(encodedBase64data.secretKeyBundle.nonce),
-          salt: tweetnaclUtil.decodeBase64(encodedBase64data.secretKeyBundle.salt)
+          blockSize: cryptoData.blockSize,
+          logN: cryptoData.logN,
+          encryptedSecretKey: tweetnaclUtil.decodeBase64(cryptoData.encryptedSecretKey),
+          nonce: tweetnaclUtil.decodeBase64(cryptoData.nonce),
+          salt: tweetnaclUtil.decodeBase64(cryptoData.salt)
         }
       };
       this.props.verifyKeypair(props.password, decodedKeyPair);
@@ -66,7 +64,7 @@ class VerifyKeypair extends Component {
                   <input type="password" className="form-control" id="password" {...password} />
                   <div className="help-block">{ (password.touched && password.error) ? password.error : '' }</div>
                 </div>
-                <button className="btn btn-primary btn-lg center-block">Verify keypair</button>
+                <button className="btn btn-primary btn-lg center-block"><i className="fa fa-eye" aria-hidden="true"></i> Verify keypair</button>
               </form>
         </div>
         </div>

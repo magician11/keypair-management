@@ -60,7 +60,7 @@ class CreateKeypair extends Component {
     } else {
       content = (
         <div>
-          <p>This section will create you a keypair, encrypt the secret key with the password you enter, and provide it to you as a downloadable zip.</p>
+          <p>This section will create you a keypair, encrypt the secret key with the password you enter, and bundle it up for you to download.</p>
           <p>Simply enter a password, confirm it, and hit the button below.</p>
           <hr />
           <div className="row">
@@ -76,7 +76,7 @@ class CreateKeypair extends Component {
                   <input type="password" className="form-control" id="passwordConfirmation" {...passwordConfirmation} />
                   <div className="help-block">{ (passwordConfirmation.touched && passwordConfirmation.error) ? passwordConfirmation.error : '' }</div>
                 </div>
-                <button className="btn btn-primary btn-lg">Generate my keypair</button>
+                <button className="btn btn-primary btn-lg"><i className="fa fa-magic" aria-hidden="true"></i> Generate my keypair</button>
               </form>
             </div>
           </div>
